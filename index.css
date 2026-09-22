@@ -1,0 +1,86 @@
+@import "katex/dist/katex.min.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 246 247 251;
+  --foreground: 18 21 43;
+  --card: 255 255 255;
+  --primary: 31 42 107;
+  --primary-fg: 255 255 255;
+  --accent: 242 183 5;
+  --accent-fg: 18 21 43;
+  --muted: 233 236 246;
+  --muted-fg: 74 80 112;
+  --border: 214 218 234;
+  --destructive: 179 38 30;
+  --success: 27 107 62;
+}
+
+.dark {
+  --background: 14 18 38;
+  --foreground: 238 240 250;
+  --card: 22 27 54;
+  --primary: 157 176 255;
+  --primary-fg: 14 18 38;
+  --accent: 242 183 5;
+  --accent-fg: 14 18 38;
+  --muted: 31 37 71;
+  --muted-fg: 169 176 208;
+  --border: 42 49 96;
+  --destructive: 255 138 128;
+  --success: 129 214 165;
+}
+
+@layer base {
+  html { color-scheme: light; }
+  html.dark { color-scheme: dark; }
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  h1, h2, h3 { @apply font-display; letter-spacing: -0.01em; }
+  :focus-visible { outline: 3px solid rgb(var(--accent)); outline-offset: 2px; border-radius: 4px; }
+}
+
+/* Transition douce entre clair et sombre : activée seulement pendant le changement */
+html.theme-transition, html.theme-transition * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* Bande inspirée du Faso Dan Fani : le seul ornement de l'interface */
+.faso-band {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgb(var(--primary)) 0 18px,
+    rgb(var(--accent)) 18px 22px,
+    rgb(var(--card)) 22px 26px,
+    rgb(var(--primary)) 26px 48px
+  );
+}
+
+@keyframes msg-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.msg-in { animation: msg-in 0.22s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Rendu du markdown des réponses du prof */
+.md > * + * { margin-top: 0.75em; }
+.md h1, .md h2, .md h3 { font-weight: 700; margin-top: 1.1em; }
+.md h1 { font-size: 1.3rem; } .md h2 { font-size: 1.15rem; } .md h3 { font-size: 1.05rem; }
+.md ul { list-style: disc; padding-left: 1.4rem; }
+.md ol { list-style: decimal; padding-left: 1.4rem; }
+.md li + li { margin-top: 0.25em; }
+.md blockquote { border-left: 4px solid rgb(var(--accent)); padding: 0.4rem 0.9rem; background: rgb(var(--muted)); border-radius: 0 8px 8px 0; }
+.md code { background: rgb(var(--muted)); padding: 0.1em 0.35em; border-radius: 4px; font-size: 0.9em; }
+.md pre { background: rgb(var(--muted)); padding: 0.8rem; border-radius: 10px; overflow-x: auto; }
+.md pre code { background: none; padding: 0; }
+.md table { border-collapse: collapse; display: block; overflow-x: auto; }
+.md th, .md td { border: 1px solid rgb(var(--border)); padding: 0.35rem 0.6rem; }
+.md a { color: rgb(var(--primary)); text-decoration: underline; }
+.md .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.2rem 0; }
